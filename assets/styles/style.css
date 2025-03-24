@@ -40,6 +40,10 @@
 
 
 /* file list */
+.file-list {
+    
+    margin-block-end: 2rem;
+}
 .file-list-ul {
     width: var(--base-width);
     margin-inline: auto;
@@ -53,7 +57,7 @@
     border-bottom: 1px solid #efefef;
 }
 
-/* remove button */
+/* Remove Button */
 .remove-button {
     opacity: 0;
     width: 26px;
@@ -65,4 +69,27 @@
 .file-list-li:hover .remove-button {
     opacity: 1;
     transition: opacity 0.2s;
+}
+
+/* Reason Button */
+.reason-buttons {
+    width: var(--base-width);
+    margin-inline: auto;
+}
+.reason-button-ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.reason-button {
+    border-radius: 999px;
+    background-color: rgb(113, 113, 255);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 0.2rem 1rem;
+}
+.reason-button:hover {
+    background-color: rgb(141, 141, 255);
 }
