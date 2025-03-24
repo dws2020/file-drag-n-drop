@@ -79,6 +79,7 @@
 .reason-button-ul {
     list-style: none;
     display: flex;
+    justify-content: space-between;
     flex-wrap: wrap;
     gap: 1rem;
 }
@@ -90,6 +91,12 @@
     cursor: pointer;
     padding: 0.2rem 1rem;
 }
-.reason-button:hover {
+.reason-button:not(.reason-button-disabled):hover {
     background-color: rgb(141, 141, 255);
+}
+.reason-button-disabled {
+    cursor: auto;
+}
+.edit-button {
+    cursor: pointer;
 }
