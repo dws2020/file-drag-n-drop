@@ -84,6 +84,20 @@
     gap: 1rem;
 }
 .reason-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    background-color: rgb(113, 113, 255);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 0.2rem 1rem;
+}
+.free-reason-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     border-radius: 999px;
     background-color: rgb(113, 113, 255);
     color: white;
@@ -96,6 +110,11 @@
 }
 .reason-button-disabled {
     cursor: auto;
+    background-color: #ccc;
+}
+.free-reason-button-disabled {
+    cursor: auto;
+    background-color: #ccc;
 }
 .edit-button {
     cursor: pointer;

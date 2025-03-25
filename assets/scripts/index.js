@@ -53,6 +53,7 @@ function createRemoveButton(i) {
 		const indexForRemove = event.currentTarget.dataset.fileIndex;
 		selectedFiles.splice(indexForRemove, 1);
 		renderAttachedFiles(selectedFiles);
+		toggleReasonButtonAbility();
 	});
 	return removeButton;
 }
@@ -71,8 +72,27 @@ window.addEventListener("DOMContentLoaded", () => {
 			selectedFiles.push(file);
 		}
 		renderAttachedFiles(selectedFiles);
+		toggleReasonButtonAbility();
 
 		// 同一ファイルを連続で選択できるようにinputを初期化
 		droppedFiles.value = "";
 	});
 });
+
+/**
+ * selectedFilesにファイルがあれば、事由ボタンを有効化
+ */
+function toggleReasonButtonAbility() {
+	const reasonButtons = document.querySelectorAll(".reason-button");
+	for (const reasonButton of reasonButtons) {
+		if (isSetFiles()) {
+			reasonButton.classList.remove("reason-button-disabled");
+		} else {
+			reasonButton.classList.add("reason-button-disabled");
+		}
+	}
+}
+
+function isSetFiles() {
+	return selectedFiles.length > 0 ? true : false;
+}
