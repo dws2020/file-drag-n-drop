@@ -7,10 +7,12 @@ function onDragOver(event) {
     event.preventDefault();
     // console.log(event)
 }
+
 function onDragLeave(event) {
     event.preventDefault();
     // console.log(event)
 }
+
 function onDrop(event) {
     event.preventDefault();
     const files = event.dataTransfer.files;
