@@ -118,10 +118,6 @@ h2 {
     cursor: auto;
     background-color: #ccc;
 }
-.free-reason-button-disabled {
-    cursor: auto;
-    background-color: #ccc;
-}
 .edit-button {
     cursor: pointer;
 }
