@@ -28,6 +28,10 @@ h2 {
     gap: .5rem;
 }
 
+.drop-area._drag-over {
+    opacity: 0.5;
+}
+
 
 .file-select-button {
     display: inline-block;
