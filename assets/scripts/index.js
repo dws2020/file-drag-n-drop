@@ -1,5 +1,7 @@
 let selectedFiles = [];
-!function () {
+
+// biome-ignore lint: no problem
+!(function () {
 	/**
 	 * inputタグにアタッチされたfilesを取得する
 	 * @param {string} inputId - 対象のinputタグのid
@@ -10,8 +12,6 @@ let selectedFiles = [];
 		if (inputElement.type !== "file") return false;
 		return inputElement.files;
 	}
-
-
 
 	/**
 	 *
@@ -35,15 +35,15 @@ let selectedFiles = [];
 		// reasonButtonにイベント設定
 		const reasonButtons = document.querySelectorAll(".reason-button");
 		for (const reasonButton of reasonButtons) {
-			reasonButton.addEventListener("click",event => {
+			reasonButton.addEventListener("click", (event) => {
 				// disableのときは処理を中止
-				if (event.currentTarget.classList.contains("reason-button-disabled")) return false;
+				if (event.currentTarget.classList.contains("reason-button-disabled"))
+					return false;
 
 				const reason = event.currentTarget.textContent;
 				clickReasonButton(reason);
 			});
 		}
-
 	});
 
 	function clickReasonButton(reason) {
@@ -62,10 +62,10 @@ let selectedFiles = [];
 		}
 		return formData;
 	}
-	
+
 	/**
 	 * APIエンドポイントにPOST送信
-	 * @param {*} formData 
+	 * @param {*} formData
 	 */
 	async function postFile(formData) {
 		const url = "api/endpoint";
@@ -76,12 +76,11 @@ let selectedFiles = [];
 			});
 			selectedFiles = [];
 			updateState();
-		} catch(e) {
+		} catch (e) {
 			console.error(e);
 		}
 	}
-}();
-
+})();
 
 /**
  * 選択ファイルリストの削除ボタンを生成する関数
@@ -107,7 +106,6 @@ function createRemoveButton(i) {
 	return removeButton;
 }
 
-
 function isSetFiles() {
 	return selectedFiles.length > 0 ? true : false;
 }
@@ -117,7 +115,7 @@ function isSetFiles() {
  */
 function updateState() {
 	renderAttachedFiles(selectedFiles);
-	toggleReasonButtonAbility()
+	toggleReasonButtonAbility();
 }
 /**
  * selectedFilesをファイル一覧として、file-list-ulに描画する
