@@ -109,7 +109,7 @@ function createRemoveButton(i) {
 }
 
 function isSetFiles() {
-	return selectedFiles.length > 0 ? true : false;
+	return selectedFiles.length > 0;
 }
 
 /**
