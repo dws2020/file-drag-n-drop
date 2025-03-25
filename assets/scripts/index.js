@@ -1,15 +1,80 @@
 const selectedFiles = [];
+!function () {
+	/**
+	 * inputタグにアタッチされたfilesを取得する
+	 * @param {string} inputId - 対象のinputタグのid
+	 * @returns files
+	 */
+	function getAttachedFiles(inputId) {
+		const inputElement = document.querySelector(`#${inputId}`);
+		if (inputElement.type !== "file") return false;
+		return inputElement.files;
+	}
 
-/**
- * inputタグにアタッチされたfilesを取得する
- * @param {string} inputId - 対象のinputタグのid
- * @returns files
- */
-function getAttachedFiles(inputId) {
-	const inputElement = document.querySelector(`#${inputId}`);
-	if (inputElement.type !== "file") return false;
-	return inputElement.files;
-}
+
+
+	/**
+	 *
+	 */
+	window.addEventListener("DOMContentLoaded", () => {
+		const droppedFiles = document.querySelector("#dropped-files");
+
+		// input要素にファイルが選択されたとき、input要素のfilesから
+		// 状態管理用変数のselectedFiles: file[]にファイルを格納する
+		droppedFiles.addEventListener("change", () => {
+			const files = getAttachedFiles("dropped-files");
+			for (const file of files) {
+				selectedFiles.push(file);
+			}
+			renderAttachedFiles(selectedFiles);
+			toggleReasonButtonAbility();
+
+			// 同一ファイルを連続で選択できるようにinputを初期化
+			droppedFiles.value = "";
+		});
+
+		// reasonButtonにイベント設定
+		const reasonButtons = document.querySelectorAll(".reason-button");
+		for (const reasonButton of reasonButtons) {
+			reasonButton.addEventListener("click",event => clickReasonButton(event.currentTarget.textContent));
+		}
+
+	});
+
+	function clickReasonButton(reason) {
+		const formData = generateFormData();
+		postFile(formData);
+	}
+
+	/**
+	 * FormDataにselectedFilesをappendして、送信準備
+	 * @returns formData -FormData
+	 */
+	function generateFormData() {
+		const formData = new FormData();
+		for (const file of selectedFiles) {
+			formData.append("file[]", file);
+		}
+		return formData;
+	}
+	
+	/**
+	 * APIエンドポイントにPOST送信
+	 * @param {*} formData 
+	 */
+	async function postFile(formData) {
+		const url = "api/endpoint";
+		try {
+			const res = await fetch(url, {
+				method: "POST",
+				body: formData,
+			});
+		} catch(e) {
+			console.error(e);
+		}
+	}
+}();
+
 
 /**
  * selectedFilesをファイル一覧として、file-list-ulに描画する
@@ -57,27 +122,6 @@ function createRemoveButton(i) {
 	});
 	return removeButton;
 }
-
-/**
- *
- */
-window.addEventListener("DOMContentLoaded", () => {
-	const droppedFiles = document.querySelector("#dropped-files");
-
-	// input要素にファイルが選択されたとき、input要素のfilesから
-	// 状態管理用変数のselectedFiles: file[]にファイルを格納する
-	droppedFiles.addEventListener("change", () => {
-		const files = getAttachedFiles("dropped-files");
-		for (const file of files) {
-			selectedFiles.push(file);
-		}
-		renderAttachedFiles(selectedFiles);
-		toggleReasonButtonAbility();
-
-		// 同一ファイルを連続で選択できるようにinputを初期化
-		droppedFiles.value = "";
-	});
-});
 
 /**
  * selectedFilesにファイルがあれば、事由ボタンを有効化
