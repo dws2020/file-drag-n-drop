@@ -1,4 +1,4 @@
-const selectedFiles = [];
+let selectedFiles = [];
 !function () {
 	/**
 	 * inputタグにアタッチされたfilesを取得する
@@ -26,8 +26,7 @@ const selectedFiles = [];
 			for (const file of files) {
 				selectedFiles.push(file);
 			}
-			renderAttachedFiles(selectedFiles);
-			toggleReasonButtonAbility();
+			updateState();
 
 			// 同一ファイルを連続で選択できるようにinputを初期化
 			droppedFiles.value = "";
@@ -36,7 +35,13 @@ const selectedFiles = [];
 		// reasonButtonにイベント設定
 		const reasonButtons = document.querySelectorAll(".reason-button");
 		for (const reasonButton of reasonButtons) {
-			reasonButton.addEventListener("click",event => clickReasonButton(event.currentTarget.textContent));
+			reasonButton.addEventListener("click",event => {
+				// disableのときは処理を中止
+				if (event.currentTarget.classList.contains("reason-button-disabled")) return false;
+
+				const reason = event.currentTarget.textContent;
+				clickReasonButton(reason);
+			});
 		}
 
 	});
@@ -69,6 +74,8 @@ const selectedFiles = [];
 				method: "POST",
 				body: formData,
 			});
+			selectedFiles = [];
+			updateState();
 		} catch(e) {
 			console.error(e);
 		}
@@ -76,6 +83,42 @@ const selectedFiles = [];
 }();
 
 
+/**
+ * 選択ファイルリストの削除ボタンを生成する関数
+ * 削除ファイルを特定するためのindexをiとして
+ * data-file-index属性に付与しておく
+ * @param {number} i
+ * @returns
+ */
+function createRemoveButton(i) {
+	const removeButton = document.createElement("button");
+	removeButton.classList.add("remove-button");
+	const iconImg = document.createElement("img");
+	iconImg.src = "./assets/images/trashIcon.svg";
+	removeButton.append(iconImg);
+	removeButton.dataset.fileIndex = i;
+
+	// 削除イベント
+	removeButton.addEventListener("click", (event) => {
+		const indexForRemove = event.currentTarget.dataset.fileIndex;
+		selectedFiles.splice(indexForRemove, 1);
+		updateState();
+	});
+	return removeButton;
+}
+
+
+function isSetFiles() {
+	return selectedFiles.length > 0 ? true : false;
+}
+
+/**
+ * renderAttachedFilesとtoggleReasonButtonAbilityをまとめて実行
+ */
+function updateState() {
+	renderAttachedFiles(selectedFiles);
+	toggleReasonButtonAbility()
+}
 /**
  * selectedFilesをファイル一覧として、file-list-ulに描画する
  * @param {file[]} selectedFiles
@@ -99,31 +142,6 @@ function renderAttachedFiles(selectedFiles) {
 }
 
 /**
- * 選択ファイルリストの削除ボタンを生成する関数
- * 削除ファイルを特定するためのindexをiとして
- * data-file-index属性に付与しておく
- * @param {number} i
- * @returns
- */
-function createRemoveButton(i) {
-	const removeButton = document.createElement("button");
-	removeButton.classList.add("remove-button");
-	const iconImg = document.createElement("img");
-	iconImg.src = "./assets/images/trashIcon.svg";
-	removeButton.append(iconImg);
-	removeButton.dataset.fileIndex = i;
-
-	// 削除イベント
-	removeButton.addEventListener("click", (event) => {
-		const indexForRemove = event.currentTarget.dataset.fileIndex;
-		selectedFiles.splice(indexForRemove, 1);
-		renderAttachedFiles(selectedFiles);
-		toggleReasonButtonAbility();
-	});
-	return removeButton;
-}
-
-/**
  * selectedFilesにファイルがあれば、事由ボタンを有効化
  */
 function toggleReasonButtonAbility() {
@@ -135,8 +153,4 @@ function toggleReasonButtonAbility() {
 			reasonButton.classList.add("reason-button-disabled");
 		}
 	}
-}
-
-function isSetFiles() {
-	return selectedFiles.length > 0 ? true : false;
 }

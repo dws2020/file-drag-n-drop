@@ -19,6 +19,5 @@ function onDrop(event) {
     for (const file of files) {
         selectedFiles.push(file);
     }
-    renderAttachedFiles(selectedFiles);
-    toggleReasonButtonAbility();
+    updateState();
 }
