@@ -7,11 +7,11 @@
     <title>Drag-and-Drop</title>
     <link rel="stylesheet" href="./assets/styles/style.css">
     <script src="./assets/scripts/index.js" defer></script>
-    <script type="module" src="./assets/scripts/module.js"></script>
+    <script type="module" src="./assets/scripts/drag-n-drop.js"></script>
 </head>
 
 <body>
-    <section class="drop-area">
+    <section id="drop-area" class="drop-area">
         <div>ファイルをドラッグ＆ドロップ</div>
         <div><img src="./assets/images/addIcon.svg" alt=""></div>
         <label for="dropped-files" class="file-select-button">またはファイルを選択</label>
@@ -37,7 +37,7 @@
                 <button class="free-reason-button free-reason-button-disabled">
                     事由を入力
                     <span role="button" class="edit-button">
-                        <img src="./assets/images/ZondiconsEditPencil.svg" alt="" srcset="" width="14">
+                        <img src="./assets/images/ZondiconsEditPencil.svg" alt="編集アイコン" srcset="" width="14">
                     </span>
                     <input type="text" style="display: none;">
                 </button>
