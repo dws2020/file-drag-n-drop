@@ -68,12 +68,14 @@ let selectedFiles = [];
 	 * @param {*} formData
 	 */
 	async function postFile(formData) {
-		const url = "api/endpoint";
+		const url = "http://localhost:3000/upload";
 		try {
 			const res = await fetch(url, {
 				method: "POST",
 				body: formData,
 			});
+			const data = await res.text();
+			console.log(data);
 			selectedFiles = [];
 			updateState();
 		} catch (e) {
