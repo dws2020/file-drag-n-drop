@@ -58,7 +58,7 @@ let selectedFiles = [];
 	function generateFormData() {
 		const formData = new FormData();
 		for (const file of selectedFiles) {
-			formData.append("file[]", file);
+			formData.append("files", file, encodeURIComponent(file.name));
 		}
 		return formData;
 	}
