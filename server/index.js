@@ -7,9 +7,9 @@ app.get("/", (req, res) => {
 });
 
 app.post("/upload", (req, res) => {
-	console.log("upload");
 	res.header("Access-Control-Allow-Origin", "*");
-	res.send("test");
+	const reason = req.query.reason;
+	res.send(reason);
 });
 
 app.listen(3000);

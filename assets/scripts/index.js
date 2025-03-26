@@ -48,7 +48,7 @@ let selectedFiles = [];
 
 	function clickReasonButton(reason) {
 		const formData = generateFormData();
-		postFile(formData);
+		postFile(formData, reason);
 	}
 
 	/**
@@ -67,8 +67,9 @@ let selectedFiles = [];
 	 * APIエンドポイントにPOST送信
 	 * @param {*} formData
 	 */
-	async function postFile(formData) {
-		const url = "http://localhost:3000/upload";
+	async function postFile(formData, reason) {
+		const escapedReason = encodeURIComponent(reason);
+		const url = `http://localhost:3000/upload?reason=${escapedReason}`;
 		try {
 			const res = await fetch(url, {
 				method: "POST",
