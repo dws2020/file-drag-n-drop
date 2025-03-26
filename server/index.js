@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const PORT = 3000;
 
 app.get("/", (req, res) => {
 	console.log("home");
@@ -12,4 +13,5 @@ app.post("/upload", (req, res) => {
 	res.send(reason);
 });
 
-app.listen(3000);
+app.listen(PORT);
+console.log(`listening on Port ${PORT}`);
